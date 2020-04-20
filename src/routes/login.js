@@ -6,12 +6,13 @@ module.exports = app => {
     scope: ['email']
   }))
 
-  // app.get('/auth/facebook/callback', passport.authenticate('facebook', {
-  //   failureRedirect: 'http://localhost:3000/',
-  //   session: false
-  // }), (req, res) => {
-  //   res.redirect('http://localhost:3000?token=' + token)
-  // })
+  app.get('/auth/facebook/callback', passport.authenticate('facebook', {
+    session: false
+  }), (req, res) => {
+    res.json({
+      user: req.user
+    })
+  })
 
   app.get('/logout', (req, res) => {
     req.logout()
