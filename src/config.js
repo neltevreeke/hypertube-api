@@ -8,7 +8,8 @@ const COOKIE_SECRET = process.env.COOKIE_SECRET
 
 const FACEBOOK = {
   clientID: process.env.FACEBOOK_APP_ID,
-  clientSecret: process.env.FACEBOOK_APP_SECRET
+  clientSecret: process.env.FACEBOOK_APP_SECRET,
+  callback: process.env.APP_URL + '/auth/facebook/callback'
 }
 
 const LINKEDIN = {

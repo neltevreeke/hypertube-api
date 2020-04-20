@@ -13,10 +13,10 @@ passport.deserializeUser((user, done) => {
 passport.use(new FacebookStrategy({
   clientID: config.FACEBOOK.clientID,
   clientSecret: config.FACEBOOK.clientSecret,
-  callbackURL: 'http://localhost:3000/auth/facebook/callback',
+  callbackURL: config.FACEBOOK.callback,
   enableProof: false
 }, (accessToken, refreshToken, profile, done) => {
-  // todo: set user in database
+  // todo: Check if we have an user, generate JWT token. blah blah.
   const userData = {
     username: profile.displayName,
     token: accessToken
