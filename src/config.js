@@ -15,7 +15,8 @@ const FACEBOOK = {
 
 const LINKEDIN = {
   consumerKey: process.env.LINKEDIN_APP_ID,
-  consumerSecret: process.env.LINKEDIN_APP_SECRET
+  consumerSecret: process.env.LINKEDIN_APP_SECRET,
+  callback: process.env.APP_URL + '/auth/linkedin/callback'
 }
 
 module.exports = {

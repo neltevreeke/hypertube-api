@@ -15,5 +15,18 @@ module.exports = app => {
     })
   })
 
+  app.get('/auth/linkedin', passport.authenticate('linkedin', {
+    scope: ['r_liteprofile']
+  }))
+
+  app.get('/auth/linkedin/callback', passport.authenticate('linkedin', {
+    session: false
+  }), (req, res) => {
+    res.json({
+      user: req.user.user,
+      token: req.user.token
+    })
+  })
+
   return app
 }
