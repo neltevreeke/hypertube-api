@@ -7,13 +7,7 @@ const userSchema = mongoose.Schema({
   email: {
     type: String
   },
-  facebookId: {
-    type: String
-  },
-  fortyTwoId: {
-    type: String
-  },
-  linkedInId: {
+  providerId: {
     type: String
   }
 })

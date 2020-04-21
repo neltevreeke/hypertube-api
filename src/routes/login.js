@@ -10,7 +10,8 @@ module.exports = app => {
     session: false
   }), (req, res) => {
     res.json({
-      user: req.user
+      user: req.user.user,
+      token: req.user.token
     })
   })
 

@@ -1,5 +1,6 @@
 const PORT = process.env.PORT
 const MONGODB_URI = process.env.MONGODB_URI
+const APP_URL = process.env.APP_URL
 const JWT_SECRET = process.env.JWT_SECRET
 const CLOUDINARY_NAME = process.env.CLOUDINARY_NAME
 const CLOUDINARY_KEY = process.env.CLOUDINARY_KEY
@@ -26,5 +27,6 @@ module.exports = {
   CLOUDINARY_SECRET,
   COOKIE_SECRET,
   FACEBOOK,
-  LINKEDIN
+  LINKEDIN,
+  APP_URL
 }
