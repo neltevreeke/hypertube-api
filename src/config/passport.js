@@ -18,6 +18,8 @@ passport.use(new FacebookStrategy({
   callbackURL: config.FACEBOOK.callback,
   enableProof: false
 }, async (accessToken, refreshToken, profile, done) => {
+  // todo: get users profile image
+
   let user
 
   user = await User.findOne({
