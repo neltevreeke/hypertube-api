@@ -3,7 +3,7 @@ const passport = require('passport')
 module.exports = app => {
   // Facebook
   app.get('/auth/facebook', passport.authenticate('facebook', {
-    scope: ['email']
+    scope: 'email'
   }))
 
   app.get('/auth/facebook/callback', passport.authenticate('facebook', {
@@ -16,7 +16,7 @@ module.exports = app => {
   })
 
   app.get('/auth/linkedin', passport.authenticate('linkedin', {
-    scope: ['r_liteprofile']
+    // scope: ['r_emailaddress']
   }))
 
   app.get('/auth/linkedin/callback', passport.authenticate('linkedin', {
