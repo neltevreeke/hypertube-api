@@ -16,13 +16,14 @@ passport.deserializeUser((user, done) => {
 passport.use(new LinkedinStrategy({
   clientID: config.LINKEDIN.consumerKey,
   clientSecret: config.LINKEDIN.consumerSecret,
-  callbackURL: config.LINKEDIN.callback
-  // scope: ['r_emailaddress']
+  callbackURL: config.LINKEDIN.callback,
+  profileFields: ['email-address'],
+  scope: ['r_emailaddress', 'r_liteprofile']
 }, async (accessToken, tokenSecret, profile, done) => {
   let user
 
   user = await User.findOne({
-    providerId: profile.id
+    email: profile.emails[0].value
   })
     .lean()
     .exec()
@@ -30,6 +31,7 @@ passport.use(new LinkedinStrategy({
   if (!user) {
     user = await User.create({
       username: profile.displayName,
+      email: profile.emails[0].value,
       providerId: profile.id
     })
   }
@@ -49,16 +51,12 @@ passport.use(new FacebookStrategy({
   clientSecret: config.FACEBOOK.clientSecret,
   callbackURL: config.FACEBOOK.callback,
   enableProof: false,
-  profileFields: ['email']
+  profileFields: ['email', 'displayName']
 }, async (accessToken, refreshToken, profile, done) => {
-  // todo: get users profile image
-
-  // console.log(profile.emails[0].value)
-
   let user
 
   user = await User.findOne({
-    providerId: profile.id
+    email: profile.emails[0].value
   })
     .lean()
     .exec()
@@ -66,6 +64,7 @@ passport.use(new FacebookStrategy({
   if (!user) {
     user = await User.create({
       username: profile.displayName,
+      email: profile.emails[0].value,
       providerId: profile.id
     })
   }

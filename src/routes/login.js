@@ -16,7 +16,7 @@ module.exports = app => {
   })
 
   app.get('/auth/linkedin', passport.authenticate('linkedin', {
-    // scope: ['r_emailaddress']
+    scope: ['r_emailaddress', 'r_liteprofile']
   }))
 
   app.get('/auth/linkedin/callback', passport.authenticate('linkedin', {
