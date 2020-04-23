@@ -28,5 +28,16 @@ module.exports = app => {
     })
   })
 
+  app.get('/auth/fortytwo', passport.authenticate('42'))
+
+  app.get('/auth/fortytwo/callback', passport.authenticate('42', {
+    session: false
+  }), (req, res) => {
+    res.json({
+      user: req.user.user,
+      token: req.user.token
+    })
+  })
+
   return app
 }

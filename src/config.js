@@ -19,6 +19,12 @@ const LINKEDIN = {
   callback: process.env.APP_URL + '/auth/linkedin/callback'
 }
 
+const FORTYTWO = {
+  clientID: process.env.FORTYTWO_APP_ID,
+  clientSecret: process.env.FORTYTWO_APP_SECRET,
+  callback: process.env.APP_URL + '/auth/fortytwo/callback'
+}
+
 module.exports = {
   PORT,
   MONGODB_URI,
@@ -29,5 +35,6 @@ module.exports = {
   COOKIE_SECRET,
   FACEBOOK,
   LINKEDIN,
+  FORTYTWO,
   APP_URL
 }
