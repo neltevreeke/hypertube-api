@@ -1,32 +1,33 @@
 const tokenUtils = require('./token')
 const User = require('../models/User')
 
-const getUserFromStrategy = profile => new Promise((resolve) => {
+const getOrCreateUser = async (profile) => {
   let user
 
-  user = User.findOne({
-    providerId: profile.id
+  user = await User.findOne({
+    email: profile.emails[0].value
   })
     .lean()
     .exec()
 
   if (!user) {
-    user = User.create({
+    user = await User.create({
       username: profile.displayName,
+      email: profile.emails[0].value,
       providerId: profile.id
     })
+      .lean()
+      .exec()
   }
 
-  const token = tokenUtils.create(user._id)
+  const token = await tokenUtils.create(user._id)
 
-  const userData = {
+  return {
     user,
     token
   }
-
-  resolve(userData)
-})
+}
 
 module.exports = {
-  getUserFromStrategy
+  getOrCreateUser
 }

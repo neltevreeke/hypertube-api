@@ -3,8 +3,7 @@ const FacebookStrategy = require('passport-facebook').Strategy
 const LinkedinStrategy = require('passport-linkedin-oauth2').Strategy
 const FortyTwoStrategy = require('passport-42').Strategy
 const config = require('../config')
-const User = require('../models/User')
-const tokenUtils = require('../utils/token')
+const passportUtils = require('../utils/passport')
 
 passport.serializeUser((user, done) => {
   done(null, user)
@@ -19,30 +18,9 @@ passport.use(new FortyTwoStrategy({
   clientSecret: config.FORTYTWO.clientSecret,
   callbackURL: config.FORTYTWO.callback
 }, async (accessToken, refreshToken, profile, done) => {
-  let user
+  const user = await passportUtils.getOrCreateUser(profile)
 
-  user = await User.findOne({
-    email: profile.emails[0].value
-  })
-    .lean()
-    .exec()
-
-  if (!user) {
-    user = await User.create({
-      username: profile.displayName,
-      email: profile.emails[0].value,
-      providerId: profile.id
-    })
-  }
-
-  const token = await tokenUtils.create(user._id)
-
-  const userData = {
-    user,
-    token
-  }
-
-  done(null, userData)
+  done(null, user)
 }))
 
 passport.use(new LinkedinStrategy({
@@ -52,30 +30,9 @@ passport.use(new LinkedinStrategy({
   profileFields: ['email-address'],
   scope: ['r_emailaddress', 'r_liteprofile']
 }, async (accessToken, tokenSecret, profile, done) => {
-  let user
+  const user = await passportUtils.getOrCreateUser(profile)
 
-  user = await User.findOne({
-    email: profile.emails[0].value
-  })
-    .lean()
-    .exec()
-
-  if (!user) {
-    user = await User.create({
-      username: profile.displayName,
-      email: profile.emails[0].value,
-      providerId: profile.id
-    })
-  }
-
-  const token = await tokenUtils.create(user._id)
-
-  const userData = {
-    user,
-    token
-  }
-
-  done(null, userData)
+  done(null, user)
 }))
 
 passport.use(new FacebookStrategy({
@@ -85,28 +42,7 @@ passport.use(new FacebookStrategy({
   enableProof: false,
   profileFields: ['email', 'displayName']
 }, async (accessToken, refreshToken, profile, done) => {
-  let user
+  const user = await passportUtils.getOrCreateUser(profile)
 
-  user = await User.findOne({
-    email: profile.emails[0].value
-  })
-    .lean()
-    .exec()
-
-  if (!user) {
-    user = await User.create({
-      username: profile.displayName,
-      email: profile.emails[0].value,
-      providerId: profile.id
-    })
-  }
-
-  const token = await tokenUtils.create(user._id)
-
-  const userData = {
-    user,
-    token
-  }
-
-  done(null, userData)
+  done(null, user)
 }))
