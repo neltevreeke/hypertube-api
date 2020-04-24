@@ -16,8 +16,6 @@ const getOrCreateUser = async (profile) => {
       email: profile.emails[0].value,
       providerId: profile.id
     })
-      .lean()
-      .exec()
   }
 
   const token = await tokenUtils.create(user._id)
