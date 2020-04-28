@@ -30,6 +30,28 @@ userSchema.pre('save', async function (next) {
   next()
 })
 
+userSchema.statics.getAuthenticatedUser = async function (email, password) {
+  const user = await this.findOne({
+    email
+  })
+
+  if (!user || !user.password) {
+    const error = new Error('not-found')
+    error.statusCode = 404
+    throw error
+  }
+
+  const isPasswordValid = await bcrypt.compare(password, user.password)
+
+  if (!isPasswordValid) {
+    const error = new Error('not-found')
+    error.statusCode = 404
+    throw error
+  }
+
+  return user
+}
+
 const User = mongoose.model('Users', userSchema)
 
 module.exports = User
