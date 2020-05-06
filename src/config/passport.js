@@ -40,7 +40,7 @@ passport.use(new FacebookStrategy({
   clientSecret: config.FACEBOOK.clientSecret,
   callbackURL: config.FACEBOOK.callback,
   enableProof: false,
-  profileFields: ['email', 'displayName']
+  profileFields: ['email', 'displayName', 'photos']
 }, async (accessToken, refreshToken, profile, done) => {
   const user = await passportUtils.getOrCreateUser(profile)
 

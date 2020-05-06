@@ -14,6 +14,11 @@ const userSchema = mongoose.Schema({
   },
   providerId: {
     type: String
+  },
+  profilePicture: {
+    value: {
+      type: String
+    }
   }
 })
 

@@ -30,7 +30,7 @@ module.exports = app => {
 
   // Facebook
   app.get('/auth/facebook', passport.authenticate('facebook', {
-    scope: 'email'
+    scope: ['email', 'user_photos']
   }))
 
   app.get('/auth/facebook/callback', passport.authenticate('facebook', {

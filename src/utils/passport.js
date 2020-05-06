@@ -14,7 +14,10 @@ const getOrCreateUser = async (profile) => {
     user = await User.create({
       username: profile.displayName,
       email: profile.emails[0].value,
-      providerId: profile.id
+      providerId: profile.id,
+      profilePicture: {
+        value: profile.photos[0].value
+      }
     })
   }
 
