@@ -9,7 +9,6 @@ const passport = require('passport')
 app.use(cors())
 app.use(bodyParser.json())
 require('./config/passport')
-app.use(bodyParser())
 app.use(passport.initialize())
 
 const routes = requireDir('./routes')

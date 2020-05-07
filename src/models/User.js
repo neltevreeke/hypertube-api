@@ -5,9 +5,12 @@ const userSchema = mongoose.Schema({
   username: {
     type: String
   },
-  email: {
+  logInEmail: {
     type: String,
     unique: true
+  },
+  email: {
+    type: String
   },
   password: {
     type: String
@@ -37,7 +40,7 @@ userSchema.pre('save', async function (next) {
 
 userSchema.statics.getAuthenticatedUser = async function (email, password) {
   const user = await this.findOne({
-    email
+    logInEmail: email
   })
 
   if (!user || !user.password) {

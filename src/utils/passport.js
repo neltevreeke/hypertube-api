@@ -5,7 +5,7 @@ const getOrCreateUser = async (profile) => {
   let user
 
   user = await User.findOne({
-    email: profile.emails[0].value
+    logInEmail: profile.emails[0].value
   })
     .lean()
     .exec()
@@ -13,6 +13,7 @@ const getOrCreateUser = async (profile) => {
   if (!user) {
     user = await User.create({
       username: profile.displayName,
+      logInEmail: profile.emails[0].value,
       email: profile.emails[0].value,
       providerId: profile.id,
       profilePicture: {

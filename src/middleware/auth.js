@@ -36,8 +36,6 @@ const authMiddleware = async (req, res, next) => {
   } catch (e) {
     next(e)
   }
-
-  next()
 }
 
 module.exports = authMiddleware

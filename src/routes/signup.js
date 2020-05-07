@@ -11,6 +11,7 @@ module.exports = app => {
     try {
       await User.create({
         username: displayName,
+        logInEmail: email,
         email,
         password
       })
