@@ -3,6 +3,9 @@ const User = require('../models/User')
 module.exports = app => {
   app.post('/signup', async (req, res, next) => {
     const {
+      username,
+      firstName,
+      lastName,
       displayName,
       email,
       password
@@ -10,7 +13,10 @@ module.exports = app => {
 
     try {
       await User.create({
-        username: displayName,
+        username,
+        firstName,
+        lastName,
+        displayName,
         logInEmail: email,
         email,
         password

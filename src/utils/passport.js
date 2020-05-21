@@ -11,8 +11,16 @@ const getOrCreateUser = async (profile) => {
     .exec()
 
   if (!user) {
+    const splittedFullName = profile.displayName.split(' ')
+    const firstName = splittedFullName[0]
+    const lastName = splittedFullName[1]
+
+    // todo: firstName, lastName
     user = await User.create({
       username: profile.displayName,
+      firstName,
+      lastName,
+      displayName: profile.displayName,
       logInEmail: profile.emails[0].value,
       email: profile.emails[0].value,
       providerId: profile.id,
