@@ -7,13 +7,17 @@ module.exports = app => {
 
     const {
       email,
-      username
+      username,
+      firstName,
+      lastName
     } = req.body
 
     try {
       user = await User.findByIdAndUpdate(req.user._id.toString(), {
         email,
-        username
+        username,
+        firstName,
+        lastName
       }, {
         new: true
       }).exec()
