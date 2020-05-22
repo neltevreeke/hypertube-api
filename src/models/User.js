@@ -28,6 +28,9 @@ const userSchema = mongoose.Schema({
     type: String
   },
   profilePicture: {
+    cloudinaryPublicId: {
+      type: String
+    },
     value: {
       type: String
     }

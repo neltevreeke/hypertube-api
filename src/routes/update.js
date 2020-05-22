@@ -9,7 +9,8 @@ module.exports = app => {
       email,
       username,
       firstName,
-      lastName
+      lastName,
+      photos
     } = req.body
 
     try {
@@ -17,7 +18,10 @@ module.exports = app => {
         email,
         username,
         firstName,
-        lastName
+        lastName,
+        profilePicture: {
+          cloudinaryPublicId: photos
+        }
       }, {
         new: true
       }).exec()
