@@ -1,28 +1,21 @@
 const User = require('../models/User')
 const authMiddleware = require('../middleware/auth')
+const { removeImage } = require('../utils/cloudinary')
 
 module.exports = app => {
   app.post('/update', authMiddleware, async (req, res, next) => {
     let user
 
-    const {
-      email,
-      username,
-      firstName,
-      lastName,
-      photos
-    } = req.body
+    // todo: get rid of 409 conflict error when updating emails
 
     try {
-      user = await User.findByIdAndUpdate(req.user._id.toString(), {
-        email,
-        username,
-        firstName,
-        lastName,
-        profilePicture: {
-          cloudinaryPublicId: photos
+      if (typeof req.body.profilePicture.cloudinaryPublicId !== 'undefined') {
+        if (typeof req.user.profilePicture.cloudinaryPublicId !== 'undefined') {
+          await removeImage(req.user.profilePicture.cloudinaryPublicId)
         }
-      }, {
+      }
+
+      user = await User.findByIdAndUpdate(req.user._id.toString(), req.body, {
         new: true
       }).exec()
 
