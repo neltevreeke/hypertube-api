@@ -6,11 +6,9 @@ module.exports = app => {
   app.post('/update', authMiddleware, async (req, res, next) => {
     let user
 
-    // todo: get rid of 409 conflict error when updating emails
-
     try {
-      if (typeof req.body.profilePicture.cloudinaryPublicId !== 'undefined') {
-        if (typeof req.user.profilePicture.cloudinaryPublicId !== 'undefined') {
+      if (req.body.profilePicture && req.body.profilePicture.cloudinaryPublicId) {
+        if (req.user.profilePicture && req.user.profilePicture.cloudinaryPublicId) {
           await removeImage(req.user.profilePicture.cloudinaryPublicId)
         }
       }
