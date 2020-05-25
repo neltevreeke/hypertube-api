@@ -24,6 +24,9 @@ const userSchema = mongoose.Schema({
   password: {
     type: String
   },
+  passwordResetToken: {
+    type: String
+  },
   providerId: {
     type: String
   },

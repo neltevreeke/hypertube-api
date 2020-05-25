@@ -6,6 +6,8 @@ const CLOUDINARY_NAME = process.env.CLOUDINARY_NAME
 const CLOUDINARY_KEY = process.env.CLOUDINARY_KEY
 const CLOUDINARY_SECRET = process.env.CLOUDINARY_SECRET
 const COOKIE_SECRET = process.env.COOKIE_SECRET
+const PASSWORD_RESET_SECRET = process.env.PASSWORD_RESET_SECRET
+const SENDGRID_API_KEY = process.env.SENDGRID_API_KEY
 
 const FACEBOOK = {
   clientID: process.env.FACEBOOK_APP_ID,
@@ -36,5 +38,7 @@ module.exports = {
   FACEBOOK,
   LINKEDIN,
   FORTYTWO,
-  APP_URL
+  APP_URL,
+  PASSWORD_RESET_SECRET,
+  SENDGRID_API_KEY
 }
