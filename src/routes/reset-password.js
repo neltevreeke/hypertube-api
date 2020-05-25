@@ -13,7 +13,7 @@ module.exports = app => {
     const passwordResetToken = await bcrypt.hash(config.PASSWORD_RESET_SECRET, salt)
 
     await User.findOneAndUpdate({
-      passwordResetEmail
+      logInEmail: passwordResetEmail
     }, {
       passwordResetToken
     })
