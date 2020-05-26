@@ -32,7 +32,9 @@ module.exports = app => {
 
     await sgMail.send(msg)
 
-    res.sendStatus(200)
+    res.json({
+      status: 200
+    })
   })
 
   return app
