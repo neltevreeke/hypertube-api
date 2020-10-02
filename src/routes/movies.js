@@ -34,5 +34,22 @@ module.exports = app => {
     }
   })
 
+  app.get('/search-movie/:movieTitle', authMiddleware, async (req, res, next) => {
+    const movieTitle = req.params.movieTitle
+
+    try {
+      let response = await fetch(`https://yts.mx/api/v2/list_movies.json?query_term=${movieTitle}`)
+      response = await response.json()
+
+      res.json({
+        searchResults: response.data.movies
+      })
+    } catch (e) {
+      const error = new Error('not-found')
+      error.statusCode = 404
+      return next(error)
+    }
+  })
+
   return app
 }
