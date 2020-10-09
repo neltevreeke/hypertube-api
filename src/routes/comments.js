@@ -10,7 +10,7 @@ const getComments = (movieId) => {
       select: ['-password', '-providerId', '-passwordResetToken', '-logInEmail', '-email']
     })
     .sort({
-      createdOn: -1
+      createdOn: 'descending'
     })
     .lean()
     .exec()
