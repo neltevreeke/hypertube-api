@@ -22,14 +22,14 @@ module.exports = app => {
 
     const {
       movieId,
-      commentContent
+      content
     } = req.body
 
     try {
       await Comment.create({
         userId: userId,
         movieId: movieId,
-        content: commentContent
+        content: content
       })
 
       res.json({
@@ -38,6 +38,20 @@ module.exports = app => {
     } catch (e) {
       const error = new Error('conflict')
       error.statusCode = 409
+      return next(error)
+    }
+  })
+
+  app.get('/comment/:id', authMiddleware, async (req, res, next) => {
+    const movieId = req.params.id
+
+    try {
+      res.json({
+        comments: await getComments(movieId)
+      })
+    } catch (e) {
+      const error = new Error('not-found')
+      error.statusCode = 404
       return next(error)
     }
   })
