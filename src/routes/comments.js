@@ -60,13 +60,15 @@ module.exports = app => {
     const userId = req.user._id.toString()
 
     const {
+      commentId,
       movieId
     } = req.body
 
     try {
       await Comment.deleteOne({
-        _id: movieId,
-        userId: userId
+        _id: commentId,
+        userId: userId,
+        movieId: movieId
       })
 
       res.json({
