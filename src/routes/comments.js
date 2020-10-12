@@ -56,5 +56,28 @@ module.exports = app => {
     }
   })
 
+  app.delete('/comment', authMiddleware, async (req, res, next) => {
+    const userId = req.user._id.toString()
+
+    const {
+      movieId
+    } = req.body
+
+    try {
+      await Comment.deleteOne({
+        _id: movieId,
+        userId: userId
+      })
+
+      res.json({
+        comments: await getComments(movieId)
+      })
+    } catch (e) {
+      const error = new Error('')
+      error.statusCode = 404
+      return next(error)
+    }
+  })
+
   return app
 }
