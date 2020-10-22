@@ -56,6 +56,29 @@ module.exports = app => {
     }
   })
 
+  app.put('/comment/:id', authMiddleware, async (req, res, next) => {
+    const commentId = req.params.id
+
+    const {
+      movieId,
+      commentContent
+    } = req.body
+
+    try {
+      await Comment.findByIdAndUpdate(commentId, {
+        content: commentContent
+      })
+
+      res.json({
+        comments: await getComments(movieId)
+      })
+    } catch (e) {
+      const error = new Error('conflict')
+      error.statusCode = 409
+      return next(error)
+    }
+  })
+
   app.delete('/comment', authMiddleware, async (req, res, next) => {
     const userId = req.user._id.toString()
 
