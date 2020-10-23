@@ -16,20 +16,37 @@ const getComments = (movieId) => {
     .exec()
 }
 
+const getUserComments = userId => {
+  return Comment.find({
+    userId: userId
+  })
+    .populate({
+      path: 'userId',
+      select: ['-password', '-providerId', '-passwordResetToken', '-logInEmail', '-email']
+    })
+    .sort({
+      createdOn: 'descending'
+    })
+    .lean()
+    .exec()
+}
+
 module.exports = app => {
   app.post('/comment', authMiddleware, async (req, res, next) => {
     const userId = req.user._id.toString()
 
     const {
       movieId,
-      content
+      content,
+      movieTitle
     } = req.body
 
     try {
       await Comment.create({
         userId: userId,
         movieId: movieId,
-        content: content
+        content: content,
+        movieTitle: movieTitle
       })
 
       res.json({
@@ -38,6 +55,20 @@ module.exports = app => {
     } catch (e) {
       const error = new Error('conflict')
       error.statusCode = 409
+      return next(error)
+    }
+  })
+
+  app.get('/comment/user/:id', authMiddleware, async (req, res, next) => {
+    const userId = req.params.id
+
+    try {
+      res.json({
+        comments: await getUserComments(userId)
+      })
+    } catch (e) {
+      const error = new Error('not-found')
+      error.statusCode = 404
       return next(error)
     }
   })

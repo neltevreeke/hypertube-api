@@ -5,6 +5,9 @@ const commentSchema = mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Users'
   },
+  movieTitle: {
+    type: String
+  },
   movieId: {
     type: String
   },
