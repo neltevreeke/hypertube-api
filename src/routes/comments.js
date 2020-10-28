@@ -111,8 +111,8 @@ module.exports = app => {
     }
   })
 
-  app.delete('/comment', authMiddleware, async (req, res, next) => {
-    const userId = req.user._id.toString()
+  app.delete('/comment/:commentId/:userId?', authMiddleware, async (req, res, next) => {
+    const userId = req.params.userId
 
     const {
       commentId,
@@ -122,12 +122,11 @@ module.exports = app => {
     try {
       await Comment.deleteOne({
         _id: commentId,
-        userId: userId,
         movieId: movieId
       })
 
       res.json({
-        comments: await getComments(movieId)
+        comments: userId ? await getUserComments(userId) : await getComments(movieId)
       })
     } catch (e) {
       const error = new Error('')
