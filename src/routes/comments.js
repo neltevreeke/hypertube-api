@@ -87,8 +87,9 @@ module.exports = app => {
     }
   })
 
-  app.put('/comment/:id', authMiddleware, async (req, res, next) => {
-    const commentId = req.params.id
+  app.put('/comment/:commentId/:userId?', authMiddleware, async (req, res, next) => {
+    const commentId = req.params.commentId
+    const userId = req.params.userId
 
     const {
       movieId,
@@ -101,7 +102,7 @@ module.exports = app => {
       })
 
       res.json({
-        comments: await getComments(movieId)
+        comments: userId ? await getUserComments(userId) : await getComments(movieId)
       })
     } catch (e) {
       const error = new Error('conflict')
