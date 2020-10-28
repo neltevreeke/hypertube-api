@@ -41,6 +41,12 @@ module.exports = app => {
       let response = await fetch(`https://yts.mx/api/v2/list_movies.json?query_term=${movieTitle}`)
       response = await response.json()
 
+      if (response.data.movie_count <= 0) {
+        const error = new Error('not-found')
+        error.statusCode = 404
+        return next(error)
+      }
+
       res.json({
         searchResults: response.data.movies
       })
