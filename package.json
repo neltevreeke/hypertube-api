@@ -38,7 +38,8 @@
     "passport-facebook": "^3.0.0",
     "passport-linkedin-oauth2": "^2.0.0",
     "require-dir": "^1.2.0",
-    "save": "^2.4.0"
+    "save": "^2.4.0",
+    "torrent-to-magnet": "^1.0.1"
   },
   "devDependencies": {
     "eslint": "^6.8.0",
